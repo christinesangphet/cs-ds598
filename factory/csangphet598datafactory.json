@@ -1,0 +1,9 @@
+{
+	"name": "csangphet598datafactory",
+	"location": "eastus2",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "2b809fde-a3c8-4bad-8f78-41517568a1dc",
+		"tenantId": "d57d32cc-c121-488f-b07b-dfe705680c71"
+	}
+}
