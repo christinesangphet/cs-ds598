@@ -331,7 +331,8 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"fileSystem": "bronze"
+						"folderPath": "Bronze",
+						"fileSystem": "csangphet598blob"
 					}
 				},
 				"schema": {}
