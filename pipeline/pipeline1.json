@@ -83,11 +83,11 @@
 										"lat": 42.361145,
 										"lon": -71.057083,
 										"start": {
-											"value": "@sub(\n    div(ticks(addDays(utcNow(), mul(mul(-1, add(item().weekIndex, 1)), 7))), 10000000),\n    div(ticks('1970-01-01T00:00:00Z'), 10000000)\n)",
+											"value": "@div(sub(ticks(addDays(utcNow(), add(-7, mul(item(), -7)))),\n    ticks('1970-01-01T00:00:00Z')), 10000000)",
 											"type": "Expression"
 										},
 										"end": {
-											"value": "@sub(\n    div(\n        ticks(addDays(utcNow(), add(mul(mul(-1, add(item().weekIndex, 1)), 7), 6))), 10000000\n    ),\n    div(ticks('1970-01-01T00:00:00Z'), 10000000)\n)",
+											"value": "@div(sub(ticks(addDays(utcNow(), mul(item(), -7))),\n    ticks('1970-01-01T00:00:00Z')), 10000000)",
 											"type": "Expression"
 										},
 										"datatype": "hour",
