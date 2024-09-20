@@ -53,6 +53,15 @@
 							"type": "JsonReadSettings"
 						}
 					},
+					"sink": {
+						"type": "JsonSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "JsonWriteSettings"
+						}
+					},
 					"enableStaging": false
 				},
 				"inputs": [
@@ -64,8 +73,15 @@
 							"lon": -71.057083,
 							"start": "@div(sub(ticks(addDays(utcNow(), add(-7, mul(item(), -7)))),     ticks('1970-01-01T00:00:00Z')), 10000000)",
 							"end": "@div(sub(ticks(addDays(utcNow(), mul(item(), -7))),     ticks('1970-01-01T00:00:00Z')), 10000000)",
-							"datatype": "\"hour\""
+							"datatype": "\"hour\"",
+							"appid": "@activity('Web1').output.value"
 						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Json4",
+						"type": "DatasetReference"
 					}
 				]
 			}
