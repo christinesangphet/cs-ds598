@@ -32,7 +32,10 @@
 		"typeProperties": {
 			"location": {
 				"type": "HttpServerLocation",
-				"relativeUrl": "data/2.5/history/city?lat=@{dataset().lat}&lon=@{data set().lon}&type=@{dataset().dataType}&start=@{dataset HW2: Historical Data Ingestion 11 ().start}&end=@{dataset().end}&appid=@{dataset().appi d}"
+				"relativeUrl": {
+					"value": "data/2.5/air_pollution/city?lat=@{dataset().lat}&lon=@{dataset().lon}&type=@{dataset().datatype}&start=@{dataset().start}&end=@{dataset().end}&appid=@{dataset().appid}",
+					"type": "Expression"
+				}
 			}
 		},
 		"schema": {}
