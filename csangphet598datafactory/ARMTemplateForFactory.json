@@ -77,7 +77,7 @@
 						"typeProperties": {
 							"method": "GET",
 							"headers": {},
-							"url": "https://ds598kv.vault.azure.net/openweatherAPIkey?api-version=7.0",
+							"url": "https://ds598kv.vault.azure.net/9ad6bbc51f619bf46ef40db83ed8b856?api-version=7.0",
 							"authentication": {
 								"type": "MSI",
 								"resource": "https://vault.azure.net"
