@@ -7,8 +7,24 @@
 		},
 		"parameters": {
 			"lat": {
-				"type": "string",
-				"defaultValue": "42"
+				"type": "float",
+				"defaultValue": 42.361145
+			},
+			"lon": {
+				"type": "float",
+				"defaultValue": -71.057083
+			},
+			"start": {
+				"type": "string"
+			},
+			"end": {
+				"type": "string"
+			},
+			"type": {
+				"type": "string"
+			},
+			"appid": {
+				"type": "string"
 			}
 		},
 		"annotations": [],
@@ -16,7 +32,10 @@
 		"typeProperties": {
 			"location": {
 				"type": "HttpServerLocation",
-				"relativeUrl": "data/2.5/history/city?lat=@{dataset().lat}&lon=@{data set().lon}&type=@{dataset().dataType}&start=@{dataset HW2: Historical Data Ingestion 11 ().start}&end=@{dataset().end}&appid=@{dataset().appi d}"
+				"relativeUrl": {
+					"value": "data/2.5/history/city?lat=@{dataset().lat}&lon=@{data set().lon}&type=@{dataset().dataType}&start=@{dataset HW2: Historical Data Ingestion 11 ().start}&end=@{dataset().end}&appid=@{dataset().appi d}",
+					"type": "Expression"
+				}
 			}
 		},
 		"schema": {}
