@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"method": "GET",
-					"url": "https://ds598kv.vault.azure.net/secrets/openweatherAPIkeynew/",
+					"url": "https://ds598kv.vault.azure.net/secrets/openweatherAPIkeynew/?api-version=7.0",
 					"authentication": {
 						"type": "MSI",
 						"resource": "https://vault.azure.net/"
