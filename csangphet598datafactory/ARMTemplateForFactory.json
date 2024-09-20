@@ -98,7 +98,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"items": {
-								"value": "@atrange",
+								"value": "@range(0,2)",
 								"type": "Expression"
 							},
 							"activities": [
