@@ -309,7 +309,7 @@
 						"typeProperties": {
 							"method": "GET",
 							"headers": {},
-							"url": "https://ds598kv.vault.azure.net/secrets/openweatherAPIkeynew/8a1c6b5c99274000bd2d1eb8209ff324?api-version=7.0",
+							"url": "https://ds598kv.vault.azure.net/secrets/openweatherAPIkeynew/8a1c6b5c99274000bd2d1eb8209ff324/?api-version=7.0",
 							"authentication": {
 								"type": "MSI",
 								"resource": "https://vault.azure.net/"
