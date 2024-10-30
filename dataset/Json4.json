@@ -10,7 +10,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": "Bronze",
+				"fileName": "history551193cd81f27011df5cbd6ac7d9f6994cfbde8c19b79bc49d216ba1afd92db9",
+				"folderPath": "Bronze/data/2.5/air_pollution",
 				"fileSystem": "csangphet598blob"
 			}
 		},
