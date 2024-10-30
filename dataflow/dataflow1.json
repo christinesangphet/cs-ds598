@@ -12,7 +12,11 @@
 					"name": "source1"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"name": "sink1"
+				}
+			],
 			"transformations": [
 				{
 					"name": "flatten1"
@@ -25,6 +29,9 @@
 				},
 				{
 					"name": "derivedColumn2"
+				},
+				{
+					"name": "select1"
 				}
 			],
 			"scriptLines": [
@@ -66,10 +73,46 @@
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
 				"     skipDuplicateMapOutputs: false) ~> flatten1",
-				"flatten1 derive(corrected_timestamp = iif(length(timestamp) == 10, timestamp, null())) ~> derivedColumn1",
-				"derivedColumn1 filter(!isNull(temp) && !isNull(humidity) && !isNull(toTimestamp({}, 'yyyy-MM-ddTHH:mm:ss'))",
+				"flatten1 derive(corrected_timestamp = iif(length(toString(timestamp)) == 10, toInteger(timestamp), toInteger(null())),",
+				"          location = toString('Boston')) ~> derivedColumn1",
+				"derivedColumn1 filter(!isNull(temp) && !isNull(humidity) && !isNull(corrected_timestamp)",
 				") ~> filter1",
-				"filter1 derive() ~> derivedColumn2"
+				"filter1 derive(date_time = toTimestamp(toLong(corrected_timestamp) * 1000),",
+				"          id = concat('Boston_', toString(corrected_timestamp)),",
+				"          temp_C = round(temp - 273.15),",
+				"          temp_min_C = round(temp_min - 273.15),",
+				"          temp_max_C = round(temp_max - 273.15),",
+				"          feels_like_C = round(feels_like - 273.15),",
+				"          feels_like_F = round((feels_like - 273.15) * 9/5 + 32),",
+				"          temp_min_F = round((temp_min - 273.15) * 9/5 + 32),",
+				"          temp_max_F = round((temp_max - 273.15) * 9/5 + 32),",
+				"          lon = -71.0589,",
+				"          lat = 42.3601,",
+				"          weather_id_value = toInteger(split(toString(weather_id[1]), ': ')[1]),",
+				"          weather_main_value = split(toString(weather_id[1]), ': ')[1],",
+				"          weather_description_value = split(toString(weather_id[2]), ': ')[1],",
+				"          weather_icon_value = split(toString(weather_id[3]), ': ')[1],",
+				"          rain_1h = iif(isNull(rain_1h), toFloat(0.0), toFloat(rain_1h))) ~> derivedColumn2",
+				"derivedColumn2 select(mapColumn(",
+				"          clouds_all,",
+				"          feels_like_K = feels_like,",
+				"          humidity,",
+				"          pressure,",
+				"          temp_K = temp,",
+				"          temp_max_K = temp_max,",
+				"          temp_min_K = temp_min,",
+				"          wind_deg,",
+				"          wind_gust,",
+				"          wind_speed,",
+				"          rain_1h,",
+				"          corrected_timestamp",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
 			]
 		}
 	}
