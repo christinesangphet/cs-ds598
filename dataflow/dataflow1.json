@@ -1,0 +1,76 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Json2",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "flatten1"
+				},
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "filter1"
+				},
+				{
+					"name": "derivedColumn2"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          calctime as double,",
+				"          city_id as boolean,",
+				"          cnt as short,",
+				"          cod as short,",
+				"          list as (clouds as (all as short), dt as integer, main as (feels_like as double, humidity as short, pressure as short, temp as double, temp_max as double, temp_min as double), rain as ({1h} as double), snow as ({1h} as double), weather as (description as string, icon as string, id as short, main as string)[], wind as (deg as short, gust as double, speed as double))[],",
+				"          message as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     documentForm: 'documentPerLine') ~> source1",
+				"source1 foldDown(unroll(list),",
+				"     mapColumn(",
+				"          calctime,",
+				"          city_id,",
+				"          cnt,",
+				"          cod,",
+				"          message,",
+				"          clouds_all = list.clouds.all,",
+				"          timestamp = list.dt,",
+				"          feels_like = list.main.feels_like,",
+				"          humidity = list.main.humidity,",
+				"          pressure = list.main.pressure,",
+				"          temp = list.main.temp,",
+				"          temp_max = list.main.temp_max,",
+				"          temp_min = list.main.temp_min,",
+				"          weather_description = list.weather.description,",
+				"          weather_icon = list.weather.icon,",
+				"          weather_id = list.weather.id,",
+				"          weather_main = list.weather.main,",
+				"          wind_deg = list.wind.deg,",
+				"          wind_gust = list.wind.gust,",
+				"          wind_speed = list.wind.speed,",
+				"          rain_1h = list.rain.{1h}",
+				"     ),",
+				"     skipDuplicateMapInputs: false,",
+				"     skipDuplicateMapOutputs: false) ~> flatten1",
+				"flatten1 derive(corrected_timestamp = iif(length(timestamp) == 10, timestamp, null())) ~> derivedColumn1",
+				"derivedColumn1 filter(!isNull(temp) && !isNull(humidity) && !isNull(toTimestamp({}, 'yyyy-MM-ddTHH:mm:ss'))",
+				") ~> filter1",
+				"filter1 derive() ~> derivedColumn2"
+			]
+		}
+	}
+}
